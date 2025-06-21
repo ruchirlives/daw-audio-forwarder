@@ -1,0 +1,24 @@
+{
+  "name": "daw-audio-forwarder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@discordjs/opus": "^0.10.0",
+    "express": "^5.1.0",
+    "mediasoup": "^3.16.0",
+    "mediasoup-client": "^3.11.0",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "wrtc": "^0.4.7"
+  },
+  "devDependencies": {
+    "node-pre-gyp": "^0.17.0"
+  }
+}

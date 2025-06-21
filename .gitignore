@@ -1,0 +1,36 @@
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# vscode
+.vscode/
+
+# Optional build artifacts
+dist/
+build/
+*.log
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+
+# Windows executables and shortcuts
+*.exe
+*.lnk
+*.bat
+
+# UMD bundles (optionally track the source, not the bundle)
+public/mediasoup-client.umd.js
+
+# Audio processing artifacts (optional)
+*.wav
+*.aiff
+*.flac
+
+# Environment variables (if used)
+.env
+.env.local
+
+# Optional:
+# Ignore compiled/temporary JS if you're using TypeScript
+*.tsbuildinfo

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DAWSERVER Audio Stream</title>
+  </head>
+  <body>
+    <h1>Live Audio Stream</h1>
+    <audio id="audio" controls></audio>
+
+    <!-- Load Socket.IO client -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/mediasoup-client.umd.js"></script>
+
+    <script>
+      const audioEl = document.getElementById("audio");
+      const socket = io({ transports: ["websocket"] });
+
+      let device, transport;
+
+      async function start() {
+        console.log("Connecting...");
+
+        await new Promise((resolve) => socket.on("connect", resolve));
+
+        device = new mediasoupClient.Device();
+
+        const rtpCapabilities = await new Promise((resolve) => {
+          socket.once("rtpCapabilities", resolve);
+          socket.emit("getRtpCapabilities");
+        });
+
+        await device.load({ routerRtpCapabilities: rtpCapabilities });
+
+        // Step 1: Create WebRTC Transport
+        socket.emit("createClientTransport");
+        const { id, iceParameters, iceCandidates, dtlsParameters } = await new Promise((resolve) => socket.once("clientTransportCreated", resolve));
+
+        transport = device.createRecvTransport({
+          id,
+          iceParameters,
+          iceCandidates,
+          dtlsParameters,
+        });
+
+        transport.on("connect", ({ dtlsParameters }, callback, errback) => {
+          socket.emit("connectWebRtcTransport", { dtlsParameters });
+          callback();
+        });
+
+        // Step 2: Request to consume
+        socket.emit("consume", { rtpCapabilities: device.rtpCapabilities });
+
+        socket.on("consumed", ({ id, kind, rtpParameters }) => {
+          transport
+            .consume({
+              id,
+              producerId: id,
+              kind,
+              rtpParameters,
+            })
+            .then((consumer) => {
+              const stream = new MediaStream([consumer.track]);
+              audioEl.srcObject = stream;
+              audioEl.play().catch((err) => console.warn("🔇 Autoplay blocked:", err));
+            });
+        });
+      }
+
+      start().catch(console.error);
+    </script>
+  </body>
+</html>
