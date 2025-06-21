@@ -1,8 +1,8 @@
 
 // Replace hardcoded values with environment variables or defaults
-const PORT = process.env.PORT;
-const ANNOUNCED_IP = process.env.ANNOUNCED_IP;
-const INPUT_PORT = process.env.INPUT_PORT;
+const PORT = process.env.PORT || 3000;
+const ANNOUNCED_IP = process.env.ANNOUNCED_IP || '192.168.0.3';
+const INPUT_PORT = process.env.INPUT_PORT || 10000;
 
 const express = require('express');
 const http = require('http');

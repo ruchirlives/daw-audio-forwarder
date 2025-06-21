@@ -44,9 +44,9 @@
    npm install
    ```
 3. Create .env file with:
-      PORT = [The port you want your server to run on e.g. 3000]
-      ANNOUNCED_IP = [The ip v4 address for your Server e.g. 192.168.0.2]
-      INPUT_PORT = [The port this server checks for input PCM streams emitted by your app]
+      PORT = 3000 # The port you want your server to run on
+      ANNOUNCED_IP = 192.168.0.3 # The ip v4 address for your Server
+      INPUT_PORT =10000 # The port this server checks for input PCM streams emitted by your app
 
 4. Start the server:
    ```sh
