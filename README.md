@@ -43,13 +43,17 @@
    ```sh
    npm install
    ```
-3. Start the server:
+3. Create .env file with:
+      PORT = [The port you want your server to run on e.g. 3000]
+      ANNOUNCED_IP = [The ip v4 address for your Server e.g. 192.168.0.2]
+      INPUT_PORT = [The port this server checks for input PCM streams emitted by your app]
+
+4. Start the server:
    ```sh
    node server.js
    ```
-   Or use `start-server.bat` on Windows.
 
-4. Open `public/client.html` in your browser to connect.
+5. Open `public/client.html` in your browser to connect.
 
 ## Dependencies
 

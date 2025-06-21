@@ -1,4 +1,9 @@
 
+// Replace hardcoded values with environment variables or defaults
+const PORT = process.env.PORT;
+const ANNOUNCED_IP = process.env.ANNOUNCED_IP;
+const INPUT_PORT = process.env.INPUT_PORT;
+
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -13,7 +18,6 @@ const server = http.createServer(app);
 const io = socketIo(server);
 
 app.use(express.static('public'));
-const PORT = 3000;
 server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
 
 
@@ -34,7 +38,7 @@ let worker, router, transport, producer;
     });
 
     transport = await router.createPlainTransport({
-        listenIp: { ip: '0.0.0.0', announcedIp: '192.168.0.3' }, // Replace with your actual LAN IP
+        listenIp: { ip: '0.0.0.0', announcedIp: ANNOUNCED_IP }, // Replace with your actual LAN IP
         comedia: true,
         rtcpMux: false,
     });
@@ -46,7 +50,6 @@ let worker, router, transport, producer;
     const udpSocket = dgram.createSocket('udp4');
     const accumulator = new AudioAccumulator(960, 2);
     const encoder = new OpusEncoder(48000, 2);
-    const inputPort = 10000;
 
     // Bind the UDP socket to the input port
     const rtpSocket = dgram.createSocket('udp4');
@@ -118,12 +121,12 @@ let worker, router, transport, producer;
         }
     });
 
-    udpSocket.bind(inputPort, () => {
-        console.log(`🔊 Listening for PCM on UDP port ${inputPort}`);
+    udpSocket.bind(INPUT_PORT, () => {
+        console.log(`🔊 Listening for PCM on UDP port ${INPUT_PORT}`);
     });
 
     // 3) Browser signalling
-    initializeWebRTC(io, router, () => producer);
+    initializeWebRTC(io, router, () => producer, ANNOUNCED_IP);
 
 })();
 

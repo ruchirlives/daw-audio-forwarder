@@ -1,5 +1,5 @@
 // initializeWebRTC.js
-function initializeWebRTC(io, router, getProducer) {
+function initializeWebRTC(io, router, getProducer, ANNOUNCED_IP) {
     io.on('connection', async (socket) => {
         console.log("📡 Browser connected");
 
@@ -11,7 +11,7 @@ function initializeWebRTC(io, router, getProducer) {
         // 2) Create a WebRTC transport for this client
         socket.on('createClientTransport', async () => {
             const transport = await router.createWebRtcTransport({
-                listenIps: [{ ip: '0.0.0.0', announcedIp: '192.168.0.3' }], // <-- your PC's LAN IP
+                listenIps: [{ ip: '0.0.0.0', announcedIp: ANNOUNCED_IP }], // <-- your PC's LAN IP
                 enableUdp: true,
                 enableTcp: true,
                 preferUdp: true,
