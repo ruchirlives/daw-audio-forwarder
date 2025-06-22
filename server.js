@@ -4,12 +4,12 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const ANNOUNCED_IP = process.env.ANNOUNCED_IP || '192.168.0.3';
 
-const INSTRUMENT_PATH = process.env.INSTRUMENT_PATH || path.join(__dirname, '..', 'instruments');
+// const INSTRUMENT_PATH = process.env.INSTRUMENT_PATH || path.join(__dirname, '..', 'instruments');
 
 const express = require('express');
 const http = require('http');
 
-const { SQLiteHandler } = require('./server/sqliteHandler'); // <-- Add this line here
+// const { SQLiteHandler } = require('./server/sqliteHandler'); // <-- Add this line here
 const { setupMediasoup } = require('./server/mediasoupHandler'); // <-- Already present
 
 const app = express();
