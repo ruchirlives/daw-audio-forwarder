@@ -4,10 +4,10 @@ const dgram = require('dgram');
 const { AudioAccumulator } = require('./AudioAccumulator');
 const { OpusEncoder } = require('@discordjs/opus');
 const { initializeWebRTC } = require('./initializeWebRTC');
+const INPUT_PORT = process.env.INPUT_PORT || 10000;
 
 async function setupMediasoup({
     ANNOUNCED_IP,
-    INPUT_PORT,
     server,
     app,
 }) {
