@@ -1,16 +1,18 @@
+const socketIo = require('socket.io');
 const mediasoup = require('mediasoup');
+const dgram = require('dgram');
+const { AudioAccumulator } = require('./AudioAccumulator');
+const { OpusEncoder } = require('@discordjs/opus');
+const { initializeWebRTC } = require('./initializeWebRTC');
 
 async function setupMediasoup({
     ANNOUNCED_IP,
-    AudioAccumulator,
-    OpusEncoder,
     INPUT_PORT,
+    server,
     app,
-    io,
-    initializeWebRTC,
-    dgram
 }) {
     // 1) Setup mediasoup
+    const io = socketIo(server);
     const worker = await mediasoup.createWorker();
     const router = await worker.createRouter({
         mediaCodecs: [{
