@@ -16,7 +16,7 @@ const app = express();
 const server = http.createServer(app);
 
 app.use(express.static('public'));
-server.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Server running at ${ANNOUNCED_IP}:${PORT}`));
 
 // Initialize Mediasoup
 (async () => {(await setupMediasoup({ANNOUNCED_IP, server, app,}));})();
